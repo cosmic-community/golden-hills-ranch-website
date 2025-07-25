@@ -1,24 +1,43 @@
-import { getFeaturedProducts, getCategories } from '@/lib/cosmic'
-import { Product, Category } from '@/types'
+import { getFeaturedProducts, getCategories, getHomepageContent } from '@/lib/cosmic'
+import { Product, Category, HomepageContent } from '@/types'
 import Hero from '@/components/Hero'
 import FeaturedProducts from '@/components/FeaturedProducts'
 import CategoryGrid from '@/components/CategoryGrid'
 
 export default async function HomePage() {
-  const [featuredProducts, categories] = await Promise.all([
+  const [featuredProducts, categories, homepageContent] = await Promise.all([
     getFeaturedProducts(),
-    getCategories()
+    getCategories(),
+    getHomepageContent()
   ])
+
+  // Fallback content if CMS content is not available
+  const content = homepageContent as HomepageContent || {
+    metadata: {
+      hero_title: "Premium Grass-Fed Beef",
+      hero_subtitle: "From our Montana ranch to your table. Experience the finest quality beef, raised with care for over three generations.",
+      hero_background_image: {
+        url: "",
+        imgix_url: ""
+      },
+      featured_products_title: "Featured Products",
+      featured_products_description: "Discover our premium selection of grass-fed beef cuts and dairy products.",
+      categories_title: "Shop by Category",
+      categories_description: "Browse our carefully curated selection of premium beef and dairy products."
+    }
+  }
 
   return (
     <div>
-      <Hero />
+      <Hero content={content} />
       
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            {content.metadata.featured_products_title}
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover our premium selection of grass-fed beef cuts and dairy products.
+            {content.metadata.featured_products_description}
           </p>
         </div>
         <FeaturedProducts products={featuredProducts as Product[]} />
@@ -26,9 +45,11 @@ export default async function HomePage() {
 
       <section className="py-16 px-4 max-w-7xl mx-auto bg-gray-50">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Shop by Category</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            {content.metadata.categories_title}
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Browse our carefully curated selection of premium beef and dairy products.
+            {content.metadata.categories_description}
           </p>
         </div>
         <CategoryGrid categories={categories as Category[]} />

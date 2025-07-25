@@ -51,6 +51,23 @@ export interface Page extends CosmicObject {
   };
 }
 
+// Homepage Content interface
+export interface HomepageContent extends CosmicObject {
+  type: 'homepage-content';
+  metadata: {
+    hero_title: string;
+    hero_subtitle: string;
+    hero_background_image: {
+      url: string;
+      imgix_url: string;
+    };
+    featured_products_title: string;
+    featured_products_description: string;
+    categories_title: string;
+    categories_description: string;
+  };
+}
+
 // API response types
 export interface CosmicResponse<T> {
   objects: T[];
@@ -70,4 +87,8 @@ export function isCategory(obj: CosmicObject): obj is Category {
 
 export function isPage(obj: CosmicObject): obj is Page {
   return obj.type === 'pages';
+}
+
+export function isHomepageContent(obj: CosmicObject): obj is HomepageContent {
+  return obj.type === 'homepage-content';
 }

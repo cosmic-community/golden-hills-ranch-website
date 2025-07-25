@@ -1,16 +1,47 @@
 import Link from 'next/link'
+import { HomepageContent } from '@/types'
 
-export default function Hero() {
+interface HeroProps {
+  content: HomepageContent | {
+    metadata: {
+      hero_title: string;
+      hero_subtitle: string;
+      hero_background_image: {
+        url: string;
+        imgix_url: string;
+      };
+      featured_products_title: string;
+      featured_products_description: string;
+      categories_title: string;
+      categories_description: string;
+    }
+  };
+}
+
+export default function Hero({ content }: HeroProps) {
+  const backgroundImage = content.metadata.hero_background_image?.imgix_url
+    ? `${content.metadata.hero_background_image.imgix_url}?w=1920&h=800&fit=crop&auto=format,compress`
+    : '';
+
+  const heroStyle = backgroundImage ? {
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  } : {};
+
   return (
-    <section className="relative bg-gradient-to-r from-ranch-brown to-amber-800 text-white py-20">
-      <div className="absolute inset-0 bg-black opacity-20"></div>
+    <section 
+      className={`relative text-white py-20 ${!backgroundImage ? 'bg-gradient-to-r from-ranch-brown to-amber-800' : ''}`}
+      style={heroStyle}
+    >
+      {!backgroundImage && <div className="absolute inset-0 bg-black opacity-20"></div>}
       <div className="relative max-w-7xl mx-auto px-4 text-center">
         <h1 className="text-5xl font-bold mb-6">
-          Premium Grass-Fed Beef
+          {content.metadata.hero_title}
         </h1>
         <p className="text-xl mb-8 max-w-2xl mx-auto">
-          From our Montana ranch to your table. Experience the finest quality beef, 
-          raised with care for over three generations.
+          {content.metadata.hero_subtitle}
         </p>
         <div className="space-x-4">
           <Link 

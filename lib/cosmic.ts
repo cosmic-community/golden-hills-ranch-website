@@ -116,3 +116,16 @@ export async function getPage(slug: string) {
     return null
   }
 }
+
+export async function getHomepageContent() {
+  try {
+    const object = await cosmic.objects
+      .findOne({ type: 'homepage-content' })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1)
+    return object
+  } catch (error) {
+    console.error('Error fetching homepage content:', error)
+    return null
+  }
+}
