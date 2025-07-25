@@ -1,94 +1,77 @@
-// Base Cosmic object interface
-interface CosmicObject {
+export interface CosmicFile {
+  url: string;
+  imgix_url: string;
+}
+
+export interface HomepageContentMetadata {
+  hero_title: string;
+  hero_subtitle: string;
+  hero_background_image: CosmicFile;
+  featured_products_title: string;
+  featured_products_description: string;
+  categories_title: string;
+  categories_description: string;
+}
+
+export interface HomepageContent {
   id: string;
-  slug: string;
   title: string;
-  content?: string;
-  metadata: Record<string, any>;
+  slug: string;
   type: string;
   created_at: string;
   modified_at: string;
+  metadata: HomepageContentMetadata;
 }
 
-// Product interface
-export interface Product extends CosmicObject {
-  type: 'products';
-  metadata: {
-    name: string;
-    description?: string;
-    price: number;
-    weight?: string;
-    images: Array<{
-      url: string;
-      imgix_url: string;
-    }>;
-    category?: Category;
-    in_stock?: boolean;
-    featured?: boolean;
-  };
+export interface CategoryMetadata {
+  name: string;
+  description?: string;
+  image?: CosmicFile;
 }
 
-// Category interface
-export interface Category extends CosmicObject {
-  type: 'categories';
-  metadata: {
-    name: string;
-    description?: string;
-    image?: {
-      url: string;
-      imgix_url: string;
-    };
-  };
+export interface Category {
+  id: string;
+  title: string;
+  slug: string;
+  type: string;
+  created_at: string;
+  modified_at: string;
+  metadata: CategoryMetadata;
 }
 
-// Page interface
-export interface Page extends CosmicObject {
-  type: 'pages';
-  metadata: {
-    title: string;
-    content: string;
-    meta_description?: string;
-  };
+export interface ProductMetadata {
+  name: string;
+  description: string;
+  price: number;
+  weight?: string;
+  images: CosmicFile[];
+  category: Category;
+  in_stock: boolean;
+  featured: boolean;
 }
 
-// Homepage Content interface
-export interface HomepageContent extends CosmicObject {
-  type: 'homepage-content';
-  metadata: {
-    hero_title: string;
-    hero_subtitle: string;
-    hero_background_image: {
-      url: string;
-      imgix_url: string;
-    };
-    featured_products_title: string;
-    featured_products_description: string;
-    categories_title: string;
-    categories_description: string;
-  };
+export interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  type: string;
+  created_at: string;
+  modified_at: string;
+  metadata: ProductMetadata;
 }
 
-// API response types
-export interface CosmicResponse<T> {
-  objects: T[];
-  total: number;
-  limit?: number;
-  skip?: number;
+export interface PageMetadata {
+  title: string;
+  content: string;
+  meta_description?: string;
 }
 
-// Type guards
-export function isProduct(obj: CosmicObject): obj is Product {
-  return obj.type === 'products';
-}
-
-export function isCategory(obj: CosmicObject): obj is Category {
-  return obj.type === 'categories';
-}
-
-export function isPage(obj: CosmicObject): obj is Page {
-  return obj.type === 'pages';
-}
-
-export function isHomepageContent(obj: CosmicObject): obj is HomepageContent {
-  return obj.type === 'homepage-content';
+export interface Page {
+  id: string;
+  title: string;
+  slug: string;
+  type: string;
+  created_at: string;
+  modified_at: string;
+  metadata: PageMetadata;
 }
