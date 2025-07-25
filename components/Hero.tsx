@@ -12,18 +12,16 @@ export default function Hero({ content }: HeroProps) {
 
   return (
     <section 
-      className="relative text-white min-h-[70vh] flex items-center justify-center bg-ranch-brown"
+      className="relative text-white min-h-[70vh] flex items-center justify-center"
       style={{
         backgroundImage: backgroundImage 
-          ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url(${backgroundImage})`
+          ? `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${backgroundImage})`
           : 'linear-gradient(135deg, #8B4513 0%, #D2691E 100%)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundRepeat: 'no-repeat'
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       <div className="relative max-w-6xl mx-auto px-6 text-center z-10">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
           {content.metadata?.hero_title || "Premium Grass-Fed Beef"}
