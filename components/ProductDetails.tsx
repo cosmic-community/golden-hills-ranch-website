@@ -13,21 +13,24 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     )
   }
 
+  const firstImage = product.metadata.images?.[0];
+  const remainingImages = product.metadata.images?.slice(1) || [];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product Images */}
         <div className="space-y-4">
-          {product.metadata.images && product.metadata.images.length > 0 && product.metadata.images[0]?.imgix_url && (
+          {firstImage?.imgix_url && (
             <>
               <img
-                src={`${product.metadata.images[0].imgix_url}?w=600&h=500&fit=crop&auto=format,compress`}
+                src={`${firstImage.imgix_url}?w=600&h=500&fit=crop&auto=format,compress`}
                 alt={product.metadata?.name || 'Product'}
                 className="w-full h-96 object-cover rounded-lg"
               />
-              {product.metadata.images.length > 1 && (
+              {remainingImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-4">
-                  {product.metadata.images.slice(1).map((image, index) => (
+                  {remainingImages.map((image, index) => (
                     image?.imgix_url && (
                       <img
                         key={index}
