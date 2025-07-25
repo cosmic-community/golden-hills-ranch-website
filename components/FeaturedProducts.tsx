@@ -24,7 +24,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-              {product.metadata?.images && product.metadata.images.length > 0 && (
+              {product.metadata?.images && product.metadata.images.length > 0 && product.metadata.images[0]?.imgix_url && (
                 <img
                   src={`${product.metadata.images[0].imgix_url}?w=400&h=300&fit=crop&auto=format,compress`}
                   alt={product.metadata?.name || 'Product'}

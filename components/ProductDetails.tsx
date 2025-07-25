@@ -18,7 +18,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product Images */}
         <div className="space-y-4">
-          {product.metadata.images && product.metadata.images.length > 0 && (
+          {product.metadata.images && product.metadata.images.length > 0 && product.metadata.images[0]?.imgix_url && (
             <>
               <img
                 src={`${product.metadata.images[0].imgix_url}?w=600&h=500&fit=crop&auto=format,compress`}
@@ -28,12 +28,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               {product.metadata.images.length > 1 && (
                 <div className="grid grid-cols-3 gap-4">
                   {product.metadata.images.slice(1).map((image, index) => (
-                    <img
-                      key={index}
-                      src={`${image.imgix_url}?w=200&h=150&fit=crop&auto=format,compress`}
-                      alt={`${product.metadata?.name || 'Product'} ${index + 2}`}
-                      className="w-full h-24 object-cover rounded-md"
-                    />
+                    image?.imgix_url && (
+                      <img
+                        key={index}
+                        src={`${image.imgix_url}?w=200&h=150&fit=crop&auto=format,compress`}
+                        alt={`${product.metadata?.name || 'Product'} ${index + 2}`}
+                        className="w-full h-24 object-cover rounded-md"
+                      />
+                    )
                   ))}
                 </div>
               )}
