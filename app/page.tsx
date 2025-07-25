@@ -12,10 +12,13 @@ export default async function HomePage() {
   ])
 
   // Fallback content if CMS content is not available
-  const content: HomepageContent = homepageContent || {
-    id: '',
+  const defaultContent: HomepageContent = {
+    id: 'default',
     title: 'Homepage Content',
     slug: 'homepage-content',
+    type: 'homepage-content',
+    created_at: new Date().toISOString(),
+    modified_at: new Date().toISOString(),
     metadata: {
       hero_title: "Premium Grass-Fed Beef",
       hero_subtitle: "From our Montana ranch to your table. Experience the finest quality beef, raised with care for over three generations.",
@@ -29,6 +32,8 @@ export default async function HomePage() {
       categories_description: "Browse our carefully curated selection of premium beef and dairy products."
     }
   }
+
+  const content: HomepageContent = homepageContent || defaultContent
 
   return (
     <div>
