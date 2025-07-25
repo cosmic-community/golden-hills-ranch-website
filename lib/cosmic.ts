@@ -41,7 +41,18 @@ export async function getFeaturedProducts() {
     return objects || []
   } catch (error) {
     console.error('Error fetching featured products:', error)
-    return []
+    // Return first 3 products as fallback
+    try {
+      const { objects } = await cosmic.objects
+        .find({ type: 'products' })
+        .props(['id', 'title', 'slug', 'metadata'])
+        .depth(1)
+        .limit(3)
+      return objects || []
+    } catch (fallbackError) {
+      console.error('Error fetching fallback products:', fallbackError)
+      return []
+    }
   }
 }
 
