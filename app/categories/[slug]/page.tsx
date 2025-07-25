@@ -32,7 +32,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         )}
       </div>
 
-      <ProductGrid products={products as Product[]} />
+      {products.length > 0 ? (
+        <ProductGrid products={products as Product[]} />
+      ) : (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">No products found in this category.</p>
+        </div>
+      )}
     </div>
   )
 }
