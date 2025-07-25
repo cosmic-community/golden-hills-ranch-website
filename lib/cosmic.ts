@@ -117,7 +117,7 @@ export async function getPages() {
 
 export async function getPage(slug: string) {
   try {
-    const object = await cosmic.objects
+    const { object } = await cosmic.objects
       .findOne({ type: 'pages', slug })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1)
@@ -130,7 +130,7 @@ export async function getPage(slug: string) {
 
 export async function getHomepageContent() {
   try {
-    const object = await cosmic.objects
+    const { object } = await cosmic.objects
       .findOne({ type: 'homepage-content' })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1)
